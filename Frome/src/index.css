@@ -30,8 +30,6 @@ html {
 }
 
 body {
-  margin: 0 auto;
-  max-width: 1440px;
   background-color: #f8f7f9;
   padding: 10px, 0, 50px, 0;
   font-family: "Px_Grotesk_Pan-Regular", -apple-system, BlinkMacSystemFont,

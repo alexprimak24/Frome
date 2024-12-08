@@ -1,5 +1,5 @@
-import { useCallback } from "react";
-
+import { useCallback, useEffect } from "react";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   useAccount,
   useConnectUI,
@@ -7,33 +7,61 @@ import {
   useIsConnected,
   useWallet,
 } from "@fuels/react";
+import ConnectAccountBtn from "../ui/StyledConnectAccountBtn";
+import ConnectedAccountBtn from "../ui/StyledConnectedAccountBtn";
+import useFormatAddress from "../../../hooks/useFormatAddress";
 
 function ConnectWalletBtn() {
   const { isConnected } = useIsConnected();
   const { connect, isConnecting } = useConnectUI();
   const { account } = useAccount();
+  const { disconnect, isPending: disconnectLoading } = useDisconnect();
+  const { wallet } = useWallet();
 
-  const handleConnection = useCallback(() => {
+  const formattedAddress = useFormatAddress(account);
+
+  const handleConnect = useCallback(() => {
     if (!isConnected) {
       connect();
     }
   }, [isConnected, connect]);
 
+  const handleDisconnect = useCallback(() => {
+    disconnect();
+  }, [disconnect]);
+
   const handleClick = useCallback(() => {
     if (!isConnected) {
-      handleConnection();
+      handleConnect();
     }
-  }, [isConnected, handleConnection]);
+  }, [isConnected, handleConnect]);
 
-  const { wallet } = useWallet();
+  //THINK ABOUT THAT
+  // useEffect(() => {
+  //   if (!wallet && !isConnecting && !isConnected) {
+  //     connect();
+  //     console.log("Connecting to wallet...");
+  //   }
+  // }, [connect, isConnected, isConnecting, wallet]);
 
   return (
     <>
-      <div className="bg-blue-50 text-white">
-        {wallet ? (
-          <p className="text-white">{String(wallet.address)}</p>
+      <div>
+        {!wallet ? (
+          <ConnectAccountBtn sx={{}} onClick={handleClick}>
+            {isConnecting ? "Connecting" : "Connect"}
+          </ConnectAccountBtn>
         ) : (
-          <button onClick={handleClick}>Connect</button>
+          <div className="">
+            <ConnectedAccountBtn endIcon={<SettingsIcon />}>
+              <span className="text-ellipsis overflow-auto tracking-[-0.7px]">
+                {formattedAddress}
+              </span>
+            </ConnectedAccountBtn>
+            {/* <ConnectedAccountBtn onClick={handleDisconnect}>
+              DIS
+            </ConnectedAccountBtn> */}
+          </div>
         )}
       </div>
     </>
@@ -41,3 +69,8 @@ function ConnectWalletBtn() {
 }
 
 export default ConnectWalletBtn;
+
+{
+  /* <Button onClick={handleDisconnect}>DIS</Button>
+          </div> */
+}

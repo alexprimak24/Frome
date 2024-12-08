@@ -1,36 +1,55 @@
 import React, { KeyboardEventHandler, useState } from "react";
 import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search";
-import { Address } from "fuels";
+import { SearchAddressInputProps } from "../../../App";
 
-function SearchAddressInput() {
-  const [inputValue, setInputValue] = useState<string>();
-  console.log(inputValue);
+//Simple Button Component
+const SearchBtn = ({ onClick }: { onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    style={{
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: "0",
+    }}
+  >
+    <SearchIcon
+      sx={{
+        color: "#05A9AF",
+        transition: "color 0.3s ease",
+        ":hover": {
+          color: "#59C2CA",
+        },
+      }}
+    />
+  </button>
+);
 
-  //replace to global function
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+function SearchAddressInput({ handleSearchAddress }: SearchAddressInputProps) {
+  const [inputAddress, setInputAddress] = useState<string>("");
+
+  //On Enter press call handleSearchAddress function
+  const handleKeySubmitAddress: KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
     if (event.key === "Enter") {
-      console.log("Input Value:", inputValue); // For debugging
-      // Set the inputValue or perform an action
+      handleSearchAddress(inputAddress);
     }
   };
 
-  const handleSearchIconPress = () => {
-    console.log(inputValue);
+  const handleSearchIconSubmitAddress = () => {
+    handleSearchAddress(inputAddress);
   };
-  //MADE RESTRUCTIONS AND REPLACE FOR GLOBAL FUNCTION
+
   return (
     <Input
       placeholder="Search adress / domain"
       size="sm"
       variant="outlined"
-      startDecorator={
-        <button onClick={handleSearchIconPress}>
-          <SearchIcon sx={{ color: "#05A9AF" }} />
-        </button>
-      }
-      onChange={(e) => setInputValue(e.target.value)}
-      onKeyDown={handleKeyDown}
+      startDecorator={<SearchBtn onClick={handleSearchIconSubmitAddress} />}
+      onChange={(e) => setInputAddress(e.target.value)}
+      onKeyDown={handleKeySubmitAddress}
       sx={{
         borderColor: "rgba(43, 45, 66, 0.70)",
         fontSize: "12px",
@@ -48,7 +67,7 @@ function SearchAddressInput() {
           transition: "box-shadow .3s ease-in-out",
         },
         "&:focus-within": {
-          borderColor: "rgba(43, 45, 66, 0.40)",
+          borderColor: "#05A9AF",
         },
       }}
     />
