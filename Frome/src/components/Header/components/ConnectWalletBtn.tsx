@@ -11,6 +11,8 @@ import ConnectAccountBtn from "../ui/StyledConnectAccountBtn";
 import ConnectedAccountBtn from "../ui/StyledConnectedAccountBtn";
 import useFormatAddress from "../../../hooks/useFormatAddress";
 
+//START WITH SETTING CONNECTED WALLET IN APP COMPONENT
+
 function ConnectWalletBtn() {
   const { isConnected } = useIsConnected();
   const { connect, isConnecting } = useConnectUI();
