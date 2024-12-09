@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from "react";
-import SettingsIcon from "@mui/icons-material/Settings";
 import {
   useAccount,
   useConnectUI,
@@ -8,8 +7,16 @@ import {
   useWallet,
 } from "@fuels/react";
 import ConnectAccountBtn from "../ui/StyledConnectAccountBtn";
-import ConnectedAccountBtn from "../ui/StyledConnectedAccountBtn";
 import useFormatAddress from "../../../hooks/useFormatAddress";
+import { Dropdown } from "@mui/base/Dropdown";
+import { Menu } from "@mui/base/Menu";
+import StyledMenuButton from "../ui/StyledMenuButton";
+import StyledMenuItem from "../ui/StyledMenuItem";
+import StyledListbox from "../ui/StyledListBox";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 //START WITH SETTING CONNECTED WALLET IN APP COMPONENT
 
@@ -46,6 +53,12 @@ function ConnectWalletBtn() {
   //   }
   // }, [connect, isConnected, isConnecting, wallet]);
 
+  const createHandleMenuClick = (menuItem: string) => {
+    return () => {
+      console.log(`Clicked on ${menuItem}`);
+    };
+  };
+
   return (
     <>
       <div>
@@ -55,14 +68,54 @@ function ConnectWalletBtn() {
           </ConnectAccountBtn>
         ) : (
           <div className="">
-            <ConnectedAccountBtn endIcon={<SettingsIcon />}>
-              <span className="text-ellipsis overflow-auto tracking-[-0.7px]">
-                {formattedAddress}
-              </span>
-            </ConnectedAccountBtn>
-            {/* <ConnectedAccountBtn onClick={handleDisconnect}>
-              DIS
-            </ConnectedAccountBtn> */}
+            <Dropdown>
+              <StyledMenuButton>
+                <div className="flex items-center justify-center gap-[15px]">
+                  <span className="text-ellipsis overflow-auto tracking-[-0.7px]">
+                    {formattedAddress}
+                  </span>
+                  <SettingsIcon />
+                </div>
+              </StyledMenuButton>
+              <Menu slots={{ listbox: StyledListbox }}>
+                <StyledMenuItem onClick={createHandleMenuClick("Profile")}>
+                  <div className="flex items-center justify-start gap-[8px]">
+                    <AccountCircleOutlinedIcon
+                      sx={{ width: "15px", height: "15px" }}
+                    />
+                    <span>MyAccount</span>
+                  </div>
+                </StyledMenuItem>
+                <StyledMenuItem
+                  onClick={createHandleMenuClick("Language settings")}
+                >
+                  <div className="flex items-center justify-start gap-[8px]">
+                    <ContentCopyOutlinedIcon
+                      sx={{ width: "15px", height: "15px" }}
+                    />
+                    <span>Copy address</span>
+                  </div>
+                </StyledMenuItem>
+                <StyledMenuItem
+                  hoverColor={"#E75A7C"}
+                  onClick={handleDisconnect}
+                  className="group"
+                >
+                  <div className="flex items-center justify-start gap-[8px]">
+                    <ExitToAppIcon
+                      sx={{
+                        width: "15px",
+                        height: "15px",
+                      }}
+                      className=" text-defaultred group-hover:text-white transition-colors duration-200"
+                    />
+                    <span className="self-start text-defaultred group-hover:text-white transition-colors duration-200">
+                      Disconnect
+                    </span>
+                  </div>
+                </StyledMenuItem>
+              </Menu>
+            </Dropdown>
           </div>
         )}
       </div>

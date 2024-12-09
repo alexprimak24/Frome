@@ -20,6 +20,7 @@ module.exports = {
       colors: {
         defaultgrey: "rgba(43, 45, 66, 0.10)",
         defaultgreen: "#05A9AF",
+        defaultred: "#E75A7C",
         // defaultlightgreen: "#B8FBCF",
         // defaultdarkgreen: "#00854D",
         // default02green: "rgba(0, 245, 140, 0.2)",

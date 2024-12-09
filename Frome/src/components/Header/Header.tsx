@@ -6,7 +6,7 @@ import ConnectWalletBtn from "./components/ConnectWalletBtn";
 
 function Header({ handleSearchAddress }: SearchAddressInputProps) {
   return (
-    <div className="flex items-center flex-col">
+    <div className="flex items-center flex-col mx-5">
       <div className="max-w-[1200px] w-full flex justify-between items-center">
         <Logo />
         <div className="flex items-center gap-[30px]">
