@@ -8,6 +8,7 @@ const StyledListbox = styled("ul")(
   overflow: auto;
   outline: 0;
   z-index: 1;
+  padding: 5px; 
   border-radius: 10px;
   border: 1px solid #05A9AF;
   background: #F8F7F9;

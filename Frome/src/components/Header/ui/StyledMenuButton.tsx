@@ -13,6 +13,9 @@ const StyledMenuButton = styled(MenuButton)(() => ({
   padding: "auto",
   width: "159px",
   height: "32px",
+  "&:focus-within": {
+    borderColor: "#05A9AF",
+  },
 }));
 
 export default StyledMenuButton;

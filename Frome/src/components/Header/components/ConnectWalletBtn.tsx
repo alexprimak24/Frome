@@ -69,12 +69,12 @@ function ConnectWalletBtn() {
         ) : (
           <div className="">
             <Dropdown>
-              <StyledMenuButton>
+              <StyledMenuButton className="group">
                 <div className="flex items-center justify-center gap-[15px]">
                   <span className="text-ellipsis overflow-auto tracking-[-0.7px]">
                     {formattedAddress}
                   </span>
-                  <SettingsIcon />
+                  <SettingsIcon className="group-focus:text-defaultgreen group-active:text-defaultgreen" />
                 </div>
               </StyledMenuButton>
               <Menu slots={{ listbox: StyledListbox }}>
@@ -107,9 +107,9 @@ function ConnectWalletBtn() {
                         width: "15px",
                         height: "15px",
                       }}
-                      className=" text-defaultred group-hover:text-white transition-colors duration-200"
+                      className=" text-defaultred group-hover:text-white group-focus:text-white transition-colors duration-200"
                     />
-                    <span className="self-start text-defaultred group-hover:text-white transition-colors duration-200">
+                    <span className="self-start text-defaultred group-hover:text-white group-focus:text-white transition-colors duration-200">
                       Disconnect
                     </span>
                   </div>

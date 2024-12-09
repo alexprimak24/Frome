@@ -4,13 +4,13 @@ import { styled } from "@mui/system";
 const StyledMenuItem = styled(MenuItem)(
   ({ hoverColor = "#05A9AF" }: { hoverColor?: string }) => `
   list-style: none;
-  padding: 8px 12px; /* Padding to match the list's box-sizing and overall size */
-  border-radius: 8px; /* Rounded corners to match the list */
+  padding: 6px 10px; /* Padding to match the list's box-sizing and overall size */
+  border-radius: 10px; /* Rounded corners to match the list */
   cursor: pointer;
   user-select: none;
   background: #F8F7F9; /* Background color to blend with the listbox */
   color: #2B2D42; /* Default text color */
-  font-size: 14px;
+  font-size: 13px;
   transition: all 0.2s ease; /* Smooth transition for background, color, etc. */
   
   &:hover {
