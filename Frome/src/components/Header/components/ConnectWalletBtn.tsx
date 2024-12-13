@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   useAccount,
   useConnectUI,
@@ -17,6 +17,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { useUserAlert } from "../../../utils/shared";
 
 //START WITH SETTING CONNECTED WALLET IN APP COMPONENT
 
@@ -24,8 +25,9 @@ function ConnectWalletBtn() {
   const { isConnected } = useIsConnected();
   const { connect, isConnecting } = useConnectUI();
   const { account } = useAccount();
-  const { disconnect, isPending: disconnectLoading } = useDisconnect();
+  const { disconnect } = useDisconnect();
   const { wallet } = useWallet();
+  const showUserAlert = useUserAlert();
 
   const formattedAddress = useFormatAddress(account);
 
@@ -45,6 +47,23 @@ function ConnectWalletBtn() {
     }
   }, [isConnected, handleConnect]);
 
+  const handleCopyAddressToClipboard = (address: string) => {
+    navigator.clipboard
+      .writeText(address)
+      .then(() => {
+        //Show dialog to notify user that address is copied
+        showUserAlert({
+          variant: "success",
+          message: "Address copied to clipboard!",
+        });
+        // setTimeout(() => {
+        //   setIsCopied(false);
+        // }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy address: ", err);
+      });
+  };
   //THINK ABOUT THAT
   // useEffect(() => {
   //   if (!wallet && !isConnecting && !isConnected) {
@@ -74,7 +93,7 @@ function ConnectWalletBtn() {
                   <span className="text-ellipsis overflow-auto tracking-[-0.7px]">
                     {formattedAddress}
                   </span>
-                  <SettingsIcon className="group-focus:text-defaultgreen group-active:text-defaultgreen" />
+                  <SettingsIcon className="group-hover:rotate-45 transition-transform duration-1000 ease-in-out transform" />
                 </div>
               </StyledMenuButton>
               <Menu slots={{ listbox: StyledListbox }}>
@@ -83,11 +102,12 @@ function ConnectWalletBtn() {
                     <AccountCircleOutlinedIcon
                       sx={{ width: "15px", height: "15px" }}
                     />
+                    {/* TODO */}
                     <span>MyAccount</span>
                   </div>
                 </StyledMenuItem>
                 <StyledMenuItem
-                  onClick={createHandleMenuClick("Language settings")}
+                  onClick={() => handleCopyAddressToClipboard(account!)}
                 >
                   <div className="flex items-center justify-start gap-[8px]">
                     <ContentCopyOutlinedIcon

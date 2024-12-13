@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import {ReactNode} from "react";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FuelProviderWrapper from "./FuelProviderWrapper";
-
+import { SnackbarProvider } from "notistack";
 
 type Props = {
   children: ReactNode;
@@ -11,11 +11,11 @@ type Props = {
 
 const queryClient = new QueryClient();
 
-const Providers = ({children}: Props) => {
+const Providers = ({ children }: Props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <FuelProviderWrapper>
-          {children}
+        <SnackbarProvider>{children}</SnackbarProvider>
       </FuelProviderWrapper>
     </QueryClientProvider>
   );

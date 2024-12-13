@@ -1,7 +1,9 @@
 import { MenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
 
-const StyledMenuItem = styled(MenuItem)(
+const StyledMenuItem = styled(MenuItem, {
+  shouldForwardProp: (prop) => prop !== "hoverColor", // Prevent `hoverColor` from being forwarded to the DOM
+})(
   ({ hoverColor = "#05A9AF" }: { hoverColor?: string }) => `
   list-style: none;
   padding: 6px 10px; /* Padding to match the list's box-sizing and overall size */
@@ -11,7 +13,7 @@ const StyledMenuItem = styled(MenuItem)(
   background: #F8F7F9; /* Background color to blend with the listbox */
   color: #2B2D42; /* Default text color */
   font-size: 13px;
-  transition: all 0.2s ease; /* Smooth transition for background, color, etc. */
+  transition: color 0.2s ease; /* Smooth transition for background, color, etc. */
   
   &:hover {
     background-color: ${hoverColor};
